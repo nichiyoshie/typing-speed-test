@@ -157,6 +157,18 @@ function finish() {
     markLevel(wpm);
 }
 
+function levelFor(wpm) {
+    if (wpm >= 50) return "fast";
+    if (wpm >= 25) return "good";
+    return "start";
+}
+
+function markLevel(wpm) {
+    document.querySelectorAll(".guide-row").forEach(row => {
+        row.classList.toggle("you", wpm > 0 && row.dataset.level === levelFor(wpm));
+    });
+}
+
 function reset() {
     clearInterval(timerId);
     started = false;
