@@ -1,4 +1,3 @@
-// ---------- Word bank ----------
 const WORDS = [
     "function", "variable", "array", "loop", "string", "object", "return", "const",
     "class", "import", "export", "async", "await", "promise", "event", "click",
@@ -12,7 +11,6 @@ const WORDS = [
     "scope", "closure", "callback", "parse", "format", "method", "field", "vector"
 ];
 
-// ---------- Elements ----------
 const wordsEl = document.getElementById("words");
 const inputEl = document.getElementById("input");
 const boxEl = document.getElementById("box");
@@ -23,7 +21,6 @@ const bestEl = document.getElementById("best");
 const resultEl = document.getElementById("result");
 const modeButtons = document.querySelectorAll(".mode");
 
-// ---------- State ----------
 let duration = 30;
 let target = "";
 let spans = [];
@@ -34,21 +31,19 @@ let timerId = null;
 let totalKeys = 0;
 let wrongKeys = 0;
 
-// ---------- Best score (saved per duration) ----------
 function loadBest() {
     try { return JSON.parse(localStorage.getItem("typingBest") || "{}"); }
     catch { return {}; }
 }
 function saveBest(best) {
     try { localStorage.setItem("typingBest", JSON.stringify(best)); }
-    catch { /* storage unavailable: ignore */ }
+    catch {}
 }
 function showBest() {
     const value = loadBest()[duration];
     bestEl.textContent = value ? value : "–";
 }
 
-// ---------- Text generation ----------
 function randomWords(count) {
     const out = [];
     let previous = "";
@@ -70,7 +65,6 @@ function appendText(text) {
     }
 }
 
-// ---------- Rendering ----------
 function render() {
     const typed = inputEl.value;
 
@@ -81,10 +75,8 @@ function render() {
         span.className = cls;
     });
 
-    // keep the text from ever running out
     if (typed.length > target.length - 60) appendText(randomWords(30) + " ");
 
-    // scroll so the current line stays in the middle of the box
     const current = spans[typed.length];
     if (current) {
         const lineHeight = parseFloat(getComputedStyle(wordsEl).lineHeight);
@@ -92,7 +84,6 @@ function render() {
     }
 }
 
-// ---------- Stats ----------
 function correctChars() {
     const typed = inputEl.value;
     let n = 0;
@@ -105,7 +96,7 @@ function accuracy() {
 }
 
 function wpmAt(seconds) {
-    const minutes = Math.max(seconds, 1) / 60;   // avoids huge numbers in the first second
+    const minutes = Math.max(seconds, 1) / 60;
     return Math.round(correctChars() / 5 / minutes);
 }
 
@@ -116,7 +107,6 @@ function updateStats() {
     accEl.textContent = accuracy() + "%";
 }
 
-// ---------- Flow ----------
 function start() {
     started = true;
     startTime = performance.now();
@@ -140,7 +130,6 @@ function finish() {
     wpmEl.textContent = wpm;
     accEl.textContent = acc + "%";
 
-    // best score
     const best = loadBest();
     const previous = best[duration] || 0;
     const isNewBest = wpm > previous;
@@ -181,12 +170,10 @@ function reset() {
     inputEl.focus();
 }
 
-// ---------- Events ----------
 inputEl.addEventListener("input", e => {
     if (finished) return;
     if (!started) start();
 
-    // count every typed character for accuracy (corrected mistakes still count)
     if (e.inputType === "insertText" && e.data) {
         const typed = inputEl.value;
         for (let k = 0; k < e.data.length; k++) {
