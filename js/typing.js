@@ -30,6 +30,7 @@ let startTime = 0;
 let timerId = null;
 let totalKeys = 0;
 let wrongKeys = 0;
+let lastValue = "";
 
 function loadBest() {
     try { return JSON.parse(localStorage.getItem("typingBest") || "{}"); }
@@ -153,6 +154,7 @@ function finish() {
         ? `New best for ${duration} seconds!`
         : `Your best for ${duration} seconds is ${Math.max(previous, wpm)} WPM.`;
     resultEl.hidden = false;
+    markLevel(wpm);
 }
 
 function reset() {
@@ -168,7 +170,9 @@ function reset() {
 
     inputEl.disabled = false;
     inputEl.value = "";
+    lastValue = "";
     resultEl.hidden = true;
+    markLevel(0);
 
     timeEl.textContent = duration;
     wpmEl.textContent = 0;
@@ -180,23 +184,26 @@ function reset() {
     inputEl.focus();
 }
 
-inputEl.addEventListener("input", e => {
+function handleInput() {
     if (finished) return;
     if (!started) start();
 
-    if (e.inputType === "insertText" && e.data) {
-        const typed = inputEl.value;
-        for (let k = 0; k < e.data.length; k++) {
-            const index = typed.length - e.data.length + k;
+    const typed = inputEl.value;
+
+    if (typed.length > lastValue.length && typed.startsWith(lastValue)) {
+        for (let i = lastValue.length; i < typed.length; i++) {
             totalKeys++;
-            if (typed[index] !== target[index]) wrongKeys++;
+            if (typed[i] !== target[i]) wrongKeys++;
         }
     }
 
+    lastValue = typed;
     render();
     updateStats();
-});
+}
 
+inputEl.addEventListener("input", handleInput);
+inputEl.addEventListener("compositionend", handleInput);
 inputEl.addEventListener("paste", e => e.preventDefault());
 inputEl.addEventListener("focus", () => boxEl.classList.remove("unfocused"));
 inputEl.addEventListener("blur", () => boxEl.classList.add("unfocused"));

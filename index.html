@@ -47,15 +47,16 @@
             <div class="stat blue"><span>Time</span><strong id="time">30</strong></div>
             <div class="stat green"><span>WPM</span><strong id="wpm">0</strong></div>
             <div class="stat yellow"><span>Accuracy</span><strong id="acc">100%</strong></div>
-            <div class="stat red"><span>Best</span><strong id="best">–</strong></div>
+            <div class="stat red"><span>Best</span><strong id="best">-</strong></div>
         </div>
 
         <div class="typing-box unfocused" id="box">
             <div class="words" id="words" aria-hidden="true"></div>
             <p class="focus-hint">Click here and start typing!</p>
             <input id="input" class="hidden-input" type="text"
-                   autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
-                   aria-label="Type the text shown above">
+                autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
+                enterkeyhint="done" data-gramm="false" data-lpignore="true"
+                aria-label="Type the text shown above">
         </div>
 
         <div class="actions">
@@ -72,6 +73,37 @@
             </div>
             <p class="result-note" id="r-note"></p>
         </div>
+
+        <section class="guide" aria-labelledby="guide-title">
+            <h2 id="guide-title">What is a good WPM?</h2>
+            <p class="guide-intro">WPM means words per minute. Every 5 correct letters count as 1 word.</p>
+
+            <div class="guide-list">
+                <div class="guide-row blue" data-level="start">
+                    <strong>Under 25</strong>
+                    <div>
+                        <h3>Nice try! Keep going!</h3>
+                        <p>You are just getting started. Everybody begins here, and speed grows with practice.</p>
+                    </div>
+                </div>
+                <div class="guide-row green" data-level="good">
+                    <strong>25 to 49</strong>
+                    <div>
+                        <h3>Great job!</h3>
+                        <p>A solid pace. Around 40 WPM is often quoted as the average for adults, so you are in the normal range.</p>
+                    </div>
+                </div>
+                <div class="guide-row yellow" data-level="fast">
+                    <strong>50 and up</strong>
+                    <div>
+                        <h3>Wow, so fast!</h3>
+                        <p>Faster than most people. Reaching 70 or more usually takes a lot of practice.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="guide-note">This test uses lowercase words with no punctuation, so your score can come out a little higher than on tests with full sentences. Only correct letters count, so typos lower your WPM.</p>
+        </section>
     </main>
 
     <script>
