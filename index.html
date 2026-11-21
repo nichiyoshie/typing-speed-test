@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/typing.css">
+</head>
+<body>
+    <main class="typing">
+        <h1>Typing <em>speed test</em></h1>
+
+        <div class="modes" role="group" aria-label="Test duration">
+            <button class="mode" data-time="15">15s</button>
+            <button class="mode active" data-time="30">30s</button>
+            <button class="mode" data-time="60">60s</button>
+        </div>
+
+        <div class="stats" aria-live="off">
+            <div class="stat"><span>Time</span><strong id="time">30</strong></div>
+            <div class="stat"><span>WPM</span><strong id="wpm">0</strong></div>
+            <div class="stat"><span>Accuracy</span><strong id="acc">100%</strong></div>
+            <div class="stat"><span>Best</span><strong id="best">–</strong></div>
+        </div>
+
+        <div class="typing-box unfocused" id="box">
+            <div class="words" id="words" aria-hidden="true"></div>
+            <p class="focus-hint" id="hint">Click here or start typing</p>
+            <input id="input" class="hidden-input" type="text"
+                autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                aria-label="Type the text shown above">
+        </div>
+
+        <div class="actions">
+            <button class="btn" id="restart">Restart</button>
+            <span class="tip">or press Esc</span>
+        </div>
+
+        <div class="result" id="result" hidden aria-live="polite">
+            <p class="result-title">Time's up</p>
+            <div class="result-grid">
+                <div><span>WPM</span><strong id="r-wpm">0</strong></div>
+                <div><span>Accuracy</span><strong id="r-acc">0%</strong></div>
+                <div><span>Correct characters</span><strong id="r-chars">0</strong></div>
+            </div>
+            <p class="result-note" id="r-note"></p>
+        </div>
+    </main>
+
+    <script src="js/typing.js"></script>
+</body>
+</html>
