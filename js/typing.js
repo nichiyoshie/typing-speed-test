@@ -35,10 +35,12 @@ function loadBest() {
     try { return JSON.parse(localStorage.getItem("typingBest") || "{}"); }
     catch { return {}; }
 }
+
 function saveBest(best) {
     try { localStorage.setItem("typingBest", JSON.stringify(best)); }
     catch {}
 }
+
 function showBest() {
     const value = loadBest()[duration];
     bestEl.textContent = value ? value : "–";
@@ -107,6 +109,13 @@ function updateStats() {
     accEl.textContent = accuracy() + "%";
 }
 
+function titleFor(wpm) {
+    if (wpm >= 50) return "Wow, so fast!";
+    if (wpm >= 25) return "Great job!";
+    if (wpm > 0) return "Nice try! Keep going!";
+    return "Time's up! Try again.";
+}
+
 function start() {
     started = true;
     startTime = performance.now();
@@ -136,11 +145,12 @@ function finish() {
     if (isNewBest) { best[duration] = wpm; saveBest(best); }
     showBest();
 
+    document.getElementById("r-title").textContent = titleFor(wpm);
     document.getElementById("r-wpm").textContent = wpm;
     document.getElementById("r-acc").textContent = acc + "%";
     document.getElementById("r-chars").textContent = correctChars();
     document.getElementById("r-note").textContent = isNewBest && wpm > 0
-        ? `New best for ${duration} seconds.`
+        ? `New best for ${duration} seconds!`
         : `Your best for ${duration} seconds is ${Math.max(previous, wpm)} WPM.`;
     resultEl.hidden = false;
 }
